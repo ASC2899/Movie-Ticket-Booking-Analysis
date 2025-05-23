@@ -1,6 +1,6 @@
 # 🧑‍💼 Customer Behavior
 
-### ❓Which customers booked the most shows.
+### ❓ 1. Which customers booked the most shows.
 
 ### 🔍 Query:
 ```SQL
@@ -16,7 +16,7 @@ LIMIT  5;
 ### 📤 Output:
 ![Q1](<../screenshots/EDA SSs/Q1.png>)
 
-### ❓Who spent the most overall.
+### ❓ 2. Who spent the most overall.
 
 ### 🔍 Query:
 ```SQL
@@ -33,7 +33,7 @@ LIMIT  5;
 ### 📤 Output:
 ![Q2](<../screenshots/EDA SSs/Q2.png>)
 
-### ❓Which city has the most active customers.
+### ❓ 3. Which city has the most active customers.
 
 ### 🔍 Query:
 ```SQL
@@ -55,7 +55,7 @@ ORDER  BY total_customers DESC;
 
 # 🎬 Movie/Show Popularity
 
-### ❓Which movies had the highest number of shows.
+### ❓ 4. Which movies had the highest number of shows.
 
 ### 🔍 Query:
 ```SQL
@@ -72,7 +72,7 @@ LIMIT  5;
 ### 📤 Output:
 ![Q4](<../screenshots/EDA SSs/Q4.png>)
 
-### ❓Which show timings are most common (AM vs PM).
+### ❓ 5. Which show timings are most common (AM vs PM).
 
 ### 🔍 Query:
 ```SQL
@@ -92,7 +92,7 @@ FROM   shows;
 ### 📤 Output:
 ![Q5](<../screenshots/EDA SSs/Q5.png>)
 
-### ❓Top 5 movies with highest average ratings.
+### ❓ 6. Top 5 movies with highest average ratings.
 
 ### 🔍 Query:
 ```SQL
@@ -108,7 +108,7 @@ LIMIT  5;
 
 # 💸 Financial
 
-### ❓Total revenue per city and theatre?
+### ❓ 7. Total revenue per city and theatre?
 
 ### 🔍 Query:
 ```SQL
@@ -131,7 +131,7 @@ ORDER  BY Th.city,
 ### 📤 Output:
 ![Q7](<../screenshots/EDA SSs/Q7.png>)
 
-### ❓Online vs Offline payment trends?
+### ❓ 8. Online vs Offline payment trends?
 
 ### 🔍 Query:
 ```SQL
@@ -144,7 +144,7 @@ GROUP  BY payment_method;
 ### 📤 Output:
 ![Q8](<../screenshots/EDA SSs/Q8.png>)
 
-### ❓Discount usage vs wallet balance?
+### ❓ 9. Discount usage vs wallet balance?
 
 ### 🔍 Query:
 ```SQL
@@ -172,7 +172,7 @@ ORDER  BY discount_usage DESC;
 
 # 📊 Time Patterns
 
-### ❓Which movie has the longest and shortest duration?
+### ❓ 10. Which movie has the longest and shortest duration?
 
 ### 🔍 Query:
 ```SQL
@@ -195,7 +195,7 @@ LIMIT  1;
 ![Q10](<../screenshots/EDA SSs/Q10_1.png>)
 ![Q10](<../screenshots/EDA SSs/Q10_2.png>)
 
-### ❓How many movies fall into these duration brackets:
+### ❓ 11. How many movies fall into these duration brackets:
 - Less than 90 minutes
 - Between 90 and 120 minutes
 - More than 120 minutes
@@ -220,7 +220,7 @@ FROM   movies;
 ### 📤 Output:
 ![Q11](<../screenshots/EDA SSs/Q11.png>)
 
-### ❓What are the most common show timings?
+### ❓ 12. What are the most common show timings?
 
 ### 🔍 Query:
 ```SQL
