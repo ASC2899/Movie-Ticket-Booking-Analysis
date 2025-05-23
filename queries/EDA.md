@@ -1,0 +1,236 @@
+# 🧑‍💼 Customer Behavior
+
+### ❓Which customers booked the most shows.
+
+### 🔍 Query:
+```SQL
+SELECT customer_id,
+       Count(show_id) AS total_shows_booked
+FROM   tickets
+GROUP  BY customer_id
+ORDER  BY total_shows_booked DESC
+LIMIT  5;
+-- Remove the LIMIT clause if you want to see full output.
+```
+
+### 📤 Output:
+![Q1](<../screenshots/EDA SSs/Q1.png>)
+
+### ❓Who spent the most overall.
+
+### 🔍 Query:
+```SQL
+SELECT T.customer_id,
+       Sum(T.total_seats * S.price_per_ticket) AS total_spent
+FROM   tickets T
+       JOIN shows S
+         ON T.show_id = S.show_id
+GROUP  BY T.customer_id
+ORDER  BY total_spent DESC
+LIMIT  5;
+```
+
+### 📤 Output:
+![Q2](<../screenshots/EDA SSs/Q2.png>)
+
+### ❓Which city has the most active customers.
+
+### 🔍 Query:
+```SQL
+SELECT Th.city,
+       Count(DISTINCT CP.customer_id) AS total_customers
+FROM   customer_profiles CP
+       JOIN tickets TK
+         ON CP.customer_id = TK.customer_id
+       JOIN shows S
+         ON TK.show_id = S.show_id
+       JOIN theatres Th
+         ON S.theatre_id = Th.theatre_id
+GROUP  BY Th.city
+ORDER  BY total_customers DESC;
+```
+
+### 📤 Output:
+![Q3](<../screenshots/EDA SSs/Q3.png>)
+
+# 🎬 Movie/Show Popularity
+
+### ❓Which movies had the highest number of shows.
+
+### 🔍 Query:
+```SQL
+SELECT M.movie_name,
+       Count(S.show_id) AS number_of_shows
+FROM   movies M
+       JOIN shows S
+         ON M.movie_id = S.movie_id
+GROUP  BY M.movie_name
+ORDER  BY number_of_shows DESC
+LIMIT  5;
+```
+
+### 📤 Output:
+![Q4](<../screenshots/EDA SSs/Q4.png>)
+
+### ❓Which show timings are most common (AM vs PM).
+
+### 🔍 Query:
+```SQL
+SELECT Sum(CASE
+             WHEN show_timings LIKE '__AM%'
+                   OR show_timings LIKE '___AM%' THEN 1
+             ELSE 0
+           END) AS AM_count,
+       Sum(CASE
+             WHEN show_timings LIKE '__PM%'
+                   OR show_timings LIKE '___PM%' THEN 1
+             ELSE 0
+           END) AS PM_count
+FROM   shows;
+```
+
+### 📤 Output:
+![Q5](<../screenshots/EDA SSs/Q5.png>)
+
+### ❓Top 5 movies with highest average ratings.
+
+### 🔍 Query:
+```SQL
+SELECT movie_name,
+       average_rating
+FROM   movies
+ORDER  BY average_rating DESC
+LIMIT  5;
+```
+
+### 📤 Output:
+![Q6](<../screenshots/EDA SSs/Q6.png>)
+
+# 💸 Financial
+
+### ❓Total revenue per city and theatre?
+
+### 🔍 Query:
+```SQL
+SELECT Th.city,
+       Th.theatre_id,
+       Sum(T.total_seats * S.price_per_ticket) AS total_revenue
+FROM   theatres Th
+       JOIN shows S
+         ON Th.theatre_id = S.theatre_id
+       JOIN tickets T
+         ON S.show_id = T.show_id
+GROUP  BY Th.city,
+          Th.theatre_id
+HAVING total_revenue > 20000
+ORDER  BY Th.city,
+          total_revenue DESC;
+-- Remove the HAVING clause to see complete output.
+```
+
+### 📤 Output:
+![Q7](<../screenshots/EDA SSs/Q7.png>)
+
+### ❓Online vs Offline payment trends?
+
+### 🔍 Query:
+```SQL
+SELECT payment_method,
+       Count(payment_method) AS trend_comparison
+FROM   tickets
+GROUP  BY payment_method; 
+```
+
+### 📤 Output:
+![Q8](<../screenshots/EDA SSs/Q8.png>)
+
+### ❓Discount usage vs wallet balance?
+
+### 🔍 Query:
+```SQL
+-- While cleaning 'customer_profiles' table I found out only 198 distinct customer names out of 1000 records.
+
+-- And also found duplicates have different customer_id and email_id but same customer_name and contact_number.
+
+-- So I thought customers might be going wild on discounts, creating multiple accounts while exploiting discount guidelines and then I decided to use the following query:
+
+SELECT CP.customer_name,
+       Sum(A.discount_issued) AS discount_usage,
+       Sum(A.wallet_balance)  AS wallet_balance
+FROM   customer_profiles CP
+       JOIN accounts A
+         ON CP.customer_id = A.customer_id
+GROUP  BY CP.customer_name
+HAVING discount_usage > 35000
+       AND wallet_balance > 5000
+ORDER  BY discount_usage DESC;
+-- Remove the HAVING clause to see complete output.
+```
+
+### 📤 Output:
+![Q9](<../screenshots/EDA SSs/Q9.png>)
+
+# 📊 Time Patterns
+
+### ❓Which movie has the longest and shortest duration?
+
+### 🔍 Query:
+```SQL
+-- Longest Duration
+SELECT movie_name,
+       duration_in_minutes
+FROM   movies
+ORDER  BY duration_in_minutes DESC
+LIMIT  1;
+
+-- Shortest Duration
+SELECT movie_name,
+       duration_in_minutes
+FROM   movies
+ORDER  BY duration_in_minutes ASC
+LIMIT  1;
+```
+
+### 📤 Output:
+![Q10](<../screenshots/EDA SSs/Q10_1.png>)
+![Q10](<../screenshots/EDA SSs/Q10_2.png>)
+
+### ❓How many movies fall into these duration brackets:
+- Less than 90 minutes
+- Between 90 and 120 minutes
+- More than 120 minutes
+
+### 🔍 Query:
+```SQL
+SELECT Sum(CASE
+             WHEN duration_in_minutes < 90 THEN 1
+             ELSE 0
+           END) AS less_than_90,
+       Sum(CASE
+             WHEN duration_in_minutes BETWEEN 90 AND 120 THEN 1
+             ELSE 0
+           END) AS between_90_and_120,
+       Sum(CASE
+             WHEN duration_in_minutes > 120 THEN 1
+             ELSE 0
+           END) AS more_than_120
+FROM   movies;
+```
+
+### 📤 Output:
+![Q11](<../screenshots/EDA SSs/Q11.png>)
+
+### ❓What are the most common show timings?
+
+### 🔍 Query:
+```SQL
+SELECT show_timings,
+       Count(*) AS count
+FROM   shows
+GROUP  BY show_timings
+ORDER  BY count DESC
+LIMIT  5;
+```
+
+### 📤 Output:
+![Q12](<../screenshots/EDA SSs/Q12.png>)

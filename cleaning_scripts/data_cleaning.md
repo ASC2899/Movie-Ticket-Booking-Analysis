@@ -1,4 +1,4 @@
-## Table names
+## 🗂️ Table names
 I added 's' in the end of following table names to make all table names consistent.
 
 ```SQL
@@ -11,21 +11,21 @@ RENAME TABLE theatre TO theatres;
 RENAME TABLE ticket TO tickets;
 ```
 
-## Table: `accounts`
+## 🗂️ Table: `accounts`
 
-### Issue Found:
+### ❗Issue Found:
 - After complete inspection and eyeballing of accounts table, I found out that the account_number of customer_id 'UI0811' does not follow the common pattern of starting with '29399'.
 
-### Fix:  
+### 🛠️ Fix:  
 ```SQL
 UPDATE accounts
 SET    account_number = '293992147483647'
 WHERE  customer_id = 'UI0811';
 ```
 
-## Table: `customer_profile`
+## 🗂️ Table: `customer_profile`
 
-### Issues Found:
+### ❗Issues Found:
 - Only 198 distinct customer names in 1000 records, suggesting high duplication.
 
 - Duplicates have different customer_id and email_id but same customer_name and contact_number.
@@ -39,7 +39,7 @@ WHERE  customer_id = 'UI0811';
 
 - All email IDs have @gmil instead of @gmail.
 
-### Fixes
+### 🛠️ Fixes:
 ```SQL
 -- Since .c is a typo and .com preferred over .co world wide, I'm going to change every record domain to .com.
 
@@ -63,21 +63,18 @@ UPDATE customer_profiles
 SET    email_id = Concat(email_id, 'com')
 WHERE  email_id LIKE '%gmil.'; 
 
--- Fixing @gmil to @gmail.
+-- 🛠️ Fixing @gmil to @gmail.
 UPDATE customer_profiles
 SET    email_id = REPLACE(email_id, '@gmil', '@gmail')
 WHERE  email_id LIKE '%@gmil%';
-
-
-
 ```
 
-## Table: `movies`
+## 🗂️ Table: `movies`
 
-### Issues Found:
+### ❗Issues Found:
 - Duration column has string format like '118 Minutes' but it should be 118 in integer data type.
 
-### Fixes:
+### 🛠️ Fixes:
 ```SQL
 UPDATE movies
 SET    duration = REPLACE(duration, RIGHT(duration, 8), '');
@@ -90,27 +87,27 @@ ALTER TABLE movies
   CHANGE COLUMN duration duration_in_minutes INT;
 ```
 
-## Table: `shows`
+## 🗂️ Table: `shows`
 
-### No Issues Found:
+### ✔️ No Issues Found:
 - No nulls or duplicates.
 - show_timings use string ranges like '7 PM - 9 PM', but values are consistently structured. No action needed.
 
-## Table: `theatres`
+## 🗂️ Table: `theatres`
 
-### No Issues Found:
+### ✔️ No Issues Found:
 - No nulls or duplicates. Every data point is consistent. No action needed.
 
-## Table: `tickets`
+## 🗂️ Table: `tickets`
 
-### Issues Found:
+### ❗Issues Found:
 
 - seat_numbers column contains list-like strings (e.g. "[11, 12]") this can make our analytic queries unnecessarily complex.
 - Needs a new column total_seats derived from seat_numbers.
 - Some values in customer_id column are 'OFFLINE' but other values are customer ids(I think due to some Tables joining this column might have messed up).
 - I will create a payment_method column using customer_id.
 
-### Fixes:
+### 🛠️ Fixes:
 ```SQL
 -- Creating total_seats column.
 ALTER TABLE tickets
