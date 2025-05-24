@@ -10,18 +10,25 @@ This project simulates a real-world movie ticket booking system. It demonstrates
 - Well-structured database schema representing customers, movies, shows, theatres, accounts, and tickets.
 
 - Data cleaning techniques (string manipulation, conversions, type casting).
+  
 - SQL practice with filtering, aggregation, joins, window functions, and CTEs.
+
 - Business-oriented use cases like customer value analysis and city-level performance.
 
 ## 🗂️ Project Structure
 
 movie-ticket-booking-analytics/
-├── data/ # Raw or sample data files
-├── schema/ # Database schema documentation (ERD, DDLs)
-├── cleaning_scripts/ # SQL cleaning/update scripts
-├── queries/ # All practice queries and use-case queries
-├── screenshots/ # Screenshots of sample data or results
-├── README.md # Project overview
+-  **data** - Raw or sample data files
+
+-  **schema** - Database schema documentation (ERD, DDLs)
+
+-  **cleaning_scripts** - SQL cleaning/update scripts
+
+-  **queries** - All practice queries and use-case queries
+
+-  **screenshots** - Screenshots of sample data or results
+
+-  **README.md** - Project overview
 
 
 ## 🚀 Technologies
