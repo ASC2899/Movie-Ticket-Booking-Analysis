@@ -3,11 +3,12 @@ A SQL-powered analytics project for a movie ticket booking system — includes s
 
 # 🎬 Movie Ticket Booking Analytics
 
-This project simulates a real-world movie ticket booking system. It demonstrates data modeling, cleaning, and advanced SQL analytics to uncover meaningful business insights.
+This project simulates a real-world movie ticket booking system. It demonstrates data modeling, cleaning, and advanced SQL analytics to uncover meaningful business insights demonstrating end-to-end data analysis, from raw data to actionable insights — all structured for clarity and collaboration.
 
 ## 📌 Key Features
 
 - Well-structured database schema representing customers, movies, shows, theatres, accounts, and tickets.
+
 - Data cleaning techniques (string manipulation, conversions, type casting).
 - SQL practice with filtering, aggregation, joins, window functions, and CTEs.
 - Business-oriented use cases like customer value analysis and city-level performance.
